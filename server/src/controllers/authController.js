@@ -1,6 +1,7 @@
 const authService = require(`../services/authService`);
 const logger = require(`../helpers/logger`);
 
+// SIGNUP
 const signup = async (req, res) => {
   try {
     const { email, password, username } = req.body;
@@ -15,6 +16,7 @@ const signup = async (req, res) => {
   }
 };
 
+// LOGIN
 const login = async (res, req) => {
   try {
     const { identifier, password } = req.body;
@@ -35,7 +37,19 @@ const login = async (res, req) => {
   }
 };
 
+// REFRESH
+const refresh = require(`../middleware/validateToken`).validateRefreshToken;
+
+// LOGOUT
+const logout = (req, res) => {
+  res.clearCookie(`accessToken`);
+  res.clearCookie(`refreshToken`);
+  res.status(200).json({ message: `Logout successful` });
+};
+
 module.export = {
   signup,
   login,
+  refresh,
+  logout,
 };
