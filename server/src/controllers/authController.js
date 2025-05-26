@@ -34,6 +34,22 @@ const signup = async (req, res) => {
   }
 };
 
+// VERIFY
+const verifyEmail = async (req, res) => {
+  try {
+    const { token, email } = req.query;
+    const user = await authService.verifyEmail(token, email);
+
+    res.status(200).json({
+      message: `Email verified successfully`,
+      user,
+    });
+  } catch (error) {
+    logger.error(`Error in verifyEmail: ${error.message}`);
+    res.status(500).json({ message: `Internal server error` });
+  }
+};
+
 // LOGIN
 const login = async (req, res) => {
   try {
@@ -78,6 +94,7 @@ const logout = (req, res) => {
 
 module.exports = {
   signup,
+  verifyEmail,
   login,
   refresh,
   logout,
