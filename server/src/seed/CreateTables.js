@@ -6,6 +6,7 @@ const createUsersTable = async () => {
         CREATE TABLE IF NOT EXISTS users (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             email VARCHAR(255) NOT NULL,
+            username VARCHAR(50) NOT NULL UNIQUE,
             password TEXT NOT NULL,
             role VARCHAR(50) DEFAULT 'user',
             verified BOOLEAN DEFAULT FALSE,

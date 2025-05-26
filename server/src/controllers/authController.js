@@ -5,12 +5,30 @@ const logger = require(`../helpers/logger`);
 const signup = async (req, res) => {
   try {
     const { email, password, username } = req.body;
-    const user = await authService.signup(email, password, username);
+    const { user, accessToken, refreshToken } = await authService.signup(
+      email,
+      password,
+      username
+    );
+
+    // Set cookies for access and refresh tokens
+    res.cookie(`accessToken`, accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === `production`,
+      sameSite: `Strict`,
+    });
+
+    res.cookie(`refreshToken`, refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === `production`,
+      sameSite: `Strict`,
+    });
+
     res.status(201).json({
       message: `Signup successfully. Please verify your email`,
       user,
     });
-  } catch {
+  } catch (error) {
     logger.error(`Error in signup: ${error.message}`);
     res.status(500).json({ message: `Internal server error` });
   }
@@ -25,8 +43,19 @@ const login = async (req, res) => {
       password
     );
 
-    res.cookie(`accessToken`, accessToken, { httpOnly: true });
-    res.cookie(`refreshToken`, refreshToken, { httpOnly: true });
+    // Set cookies for access and refresh tokens
+    res.cookie(`accessToken`, accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === `production`,
+      sameSite: `Strict`,
+    });
+
+    res.cookie(`refreshToken`, refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === `production`,
+      sameSite: `Strict`,
+    });
+
     res.status(200).json({
       message: `Login successful`,
       user,

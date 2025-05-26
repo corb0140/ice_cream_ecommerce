@@ -5,7 +5,7 @@ const generateAccessToken = (user) => {
     { id: user.id, email: user.email, role: user.role },
     process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: `${process.env.ACCESS_TOKEN_EXPIRATION}m`,
+      expiresIn: `${process.env.ACCESS_TOKEN_EXPIRES_IN}m`,
     }
   );
 };
@@ -15,12 +15,12 @@ const generateRefreshToken = (user) => {
     { id: user.id, email: user.email, role: user.role },
     process.env.REFRESH_TOKEN_SECRET,
     {
-      expiresIn: `${process.env.REFRESH_TOKEN_EXPIRATION}d`,
+      expiresIn: `${process.env.REFRESH_TOKEN_EXPIRES_IN}d`,
     }
   );
 };
 
-module.export = {
+module.exports = {
   generateAccessToken,
   generateRefreshToken,
 };
