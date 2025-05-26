@@ -5,7 +5,7 @@ const {
   generateRefreshToken,
 } = require("../helpers/generateTokens");
 
-const { sendVerificatioNEmail } = require("../helpers/sendVerificationEmail");
+const { sendVerificationEmail } = require("../helpers/email");
 
 const signup = async (email, password, username) => {
   const hashPassword = await bcrypt.hash(password, 10);
@@ -16,7 +16,7 @@ const signup = async (email, password, username) => {
   );
 
   const user = rows[0];
-  await sendVerificatioNEmail(user.email);
+  await sendVerificationEmail(user.email);
 
   return user;
 };

@@ -17,7 +17,7 @@ const signup = async (req, res) => {
 };
 
 // LOGIN
-const login = async (res, req) => {
+const login = async (req, res) => {
   try {
     const { identifier, password } = req.body;
     const { user, accessToken, refreshToken } = await authService.login(
@@ -47,7 +47,7 @@ const logout = (req, res) => {
   res.status(200).json({ message: `Logout successful` });
 };
 
-module.export = {
+module.exports = {
   signup,
   login,
   refresh,

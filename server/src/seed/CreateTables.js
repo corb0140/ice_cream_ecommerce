@@ -25,15 +25,27 @@ const createProductsTable = async () => {
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`);
 };
 
-const createCartsTable = async () => {
+const createCartTable = async () => {
   await pool.query(`
-    CREATE TABLE IF NOT EXISTS carts (
+    CREATE TABLE IF NOT EXISTS cart (
     ID UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_ID UUID REFERENCES users(id) ON DELETE CASCADE,
     session_id VARCHAR(255) NOT NULL,
-    items JSONB DEFAULT '[]',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )`);
+};
+
+const createCartItemsTable = async () => {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS cart_items (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    cart_id UUID REFERENCES cart(id) ON DELETE CASCADE,
+    product_id UUID REFERENCES products(id) ON DELETE CASCADE,
+    quantity INTEGER NOT NULL CHECK (quantity > 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (cart_id, product_id) -- Ensures unique product in cart so it doesn't duplicate
     )`);
 };
 
@@ -41,7 +53,8 @@ const seedAllTables = async () => {
   try {
     await createUsersTable();
     await createProductsTable();
-    await createCartsTable();
+    await createCartTable();
+    await createCartItemsTable();
     logger.info("All tables created successfully");
   } catch (error) {
     logger.error("Error creating tables:", error);

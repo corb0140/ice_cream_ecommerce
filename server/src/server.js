@@ -12,8 +12,22 @@ app.use(cookieParser());
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 
 // IMPORT ROUTES
+const authRoutes = require("./routes/authRoutes");
+const adminRoutes = require("./routes/adminRoutes");
+const userRoutes = require("./routes/userRoutes");
+const productRoutes = require("./routes/productRoutes");
+const cartRoutes = require("./routes/cartRoutes");
 
 // ROUTES
+app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
+app.use("/user", userRoutes);
+app.use("/products", productRoutes);
+app.use("/items", cartRoutes);
+
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "healthy" });
+});
 
 // SERVER
 const PORT = process.env.PORT || 3000;
