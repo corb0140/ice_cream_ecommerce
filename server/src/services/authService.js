@@ -69,6 +69,7 @@ const verifyEmail = async (token, email) => {
   return user;
 };
 
+// LOGIN
 const login = async (identifier, password) => {
   const { rows } = await pool.query(
     `SELECT * FROM users WHERE email = $1 OR username = $1`,

@@ -3,10 +3,10 @@ const logger = require("../helpers/logger");
 
 const getCartItems = async (req, res) => {
   try {
-    const { userId } = req.user;
+    const { id } = req.user;
     const sessionId = req.cookies.sessionId;
 
-    const cart = await cartService.getUserCart(userId, sessionId);
+    const cart = await cartService.getUserCart(id, sessionId);
 
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
@@ -21,7 +21,7 @@ const getCartItems = async (req, res) => {
 
 const addItemToCart = async (req, res) => {
   try {
-    const { userId } = req.user;
+    const { id } = req.user;
     const sessionId = req.cookies.sessionId;
     const { productId, quantity } = req.body;
 
@@ -32,7 +32,7 @@ const addItemToCart = async (req, res) => {
     }
 
     const cartItem = await cartService.addItemToCart(
-      userId,
+      id,
       { productId, quantity },
       sessionId
     );
@@ -70,13 +70,13 @@ const removeItemFromCart = async (req, res) => {
   try {
     const { itemId } = req.params;
 
-    const deletedItem = await cartService.removeCartItem(itemId);
+    const deletedItem = await cartService.removeItemFromCart(itemId);
 
     if (!deletedItem) {
       return res.status(404).json({ message: "Cart item not found" });
     }
 
-    res.status(200).json(deletedItem);
+    res.status(200).json(`removed item  with id:${itemId} from cart`);
   } catch (error) {
     logger.error("Error removing item from cart:", error);
     res.status(500).json({ message: "Internal server error" });

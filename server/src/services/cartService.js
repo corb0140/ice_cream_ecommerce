@@ -1,16 +1,16 @@
 const pool = require("../config/db");
 
 const getUserCart = async (userId, sessionId) => {
-  const { rows } = await pool.query(
+  const { rows: cart } = await pool.query(
     "SELECT * FROM cart WHERE user_id = $1 AND session_id = $2",
     [userId, sessionId]
   );
 
-  if (rows.length === 0) {
+  if (cart.length === 0) {
     return null;
   }
 
-  const cartId = rows[0].id;
+  const cartId = cart[0].id;
 
   const { rows: items } = await pool.query(
     "SELECT * FROM cart_items WHERE cart_id = $1",
@@ -18,7 +18,7 @@ const getUserCart = async (userId, sessionId) => {
   );
 
   return {
-    ...rows[0],
+    ...cart[0],
     items,
   };
 };

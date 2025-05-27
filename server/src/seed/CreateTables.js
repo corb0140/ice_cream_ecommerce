@@ -23,14 +23,16 @@ const createProductsTable = async () => {
     price DECIMAL(10, 2) NOT NULL,
     image_url TEXT,
     stock INTEGER DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`);
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )`);
 };
 
 const createCartTable = async () => {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS cart (
-    ID UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_ID UUID REFERENCES users(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
     session_id VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

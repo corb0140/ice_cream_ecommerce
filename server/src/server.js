@@ -23,7 +23,7 @@ app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use("/products", productRoutes);
-app.use("/items", cartRoutes);
+app.use("/cart", cartRoutes);
 
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "healthy" });

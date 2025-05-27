@@ -27,13 +27,14 @@ const getProductById = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-  const { name, description, price, image_url } = req.body;
+  const { name, description, price, stock, image_url } = req.body;
 
   try {
     const newProduct = await productService.createProduct({
       name,
       description,
       price,
+      stock,
       image_url,
     });
     res.status(201).json(newProduct);
@@ -45,13 +46,14 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { name, description, price, image_url } = req.body;
+  const { name, description, price, stock, image_url } = req.body;
 
   try {
     const updatedProduct = await productService.updateProduct(id, {
       name,
       description,
       price,
+      stock,
       image_url,
     });
     if (!updatedProduct) {
@@ -69,7 +71,7 @@ const deleteProduct = async (req, res) => {
 
   try {
     await productService.deleteProduct(id);
-    res.status(204).send();
+    res.status(201).json(`Product with ${id} successfully deleted `);
   } catch (error) {
     logger.error("Error deleting product:", error);
     res.status(500).json({ message: "Internal server error" });

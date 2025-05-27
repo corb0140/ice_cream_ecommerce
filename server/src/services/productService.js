@@ -17,19 +17,39 @@ const getProductById = async (id) => {
 /**
  * Returning * will perform the insert operation as normal and return the inserted row.
  */
-const createProduct = async ({ name, description, price, image_url }) => {
-  const { rows } = await pool.query(
-    "INSERT INTO products (name, description, price, image_url) VALUES ($1, $2, $3, $4) RETURNING *",
-    [name, description, price, image_url]
+const createProduct = async ({
+  name,
+  description,
+  price,
+  stock,
+  image_url,
+}) => {
+  const existingProduct = await pool.query(
+    "SELECT * FROM products WHERE LOWER(name) = LOWER($1)",
+    [name]
   );
 
-  return rows[0];
+  if (existingProduct.rows.length > 0) {
+    throw new Error(`Product with this name "${name}" already exists`);
+  }
+
+  const { rows } = await pool.query(
+    "INSERT INTO products (name, description, price, stock, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+    [name, description, price, stock, image_url]
+  );
+
+  const product = rows[0];
+
+  return product;
 };
 
-const updateProduct = async (id, { name, description, price, image_url }) => {
+const updateProduct = async (
+  id,
+  { name, description, price, stock, image_url }
+) => {
   const { rows } = await pool.query(
-    "UPDATE products SET name = $1, description = $2, price = $3, image_url = $4 WHERE id = $5 RETURNING *",
-    [name, description, price, image_url, id]
+    "UPDATE products SET name = $1, description = $2, price = $3, stock= $4, image_url = $5 WHERE id = $6 RETURNING *",
+    [name, description, price, stock, image_url, id]
   );
 
   return rows[0];
