@@ -1,12 +1,7 @@
-import "./App.css";
 import AppRouter from "./router/routes";
 
 function App() {
-  return (
-    <div className="h-screen">
-      <AppRouter />
-    </div>
-  );
+  return <AppRouter />;
 }
 
 export default App;
