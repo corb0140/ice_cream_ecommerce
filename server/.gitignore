@@ -8,4 +8,6 @@ node_modules
 seed
 
 # Ignore log files
-server/*.log
+combined.log
+error.log
+logs/
