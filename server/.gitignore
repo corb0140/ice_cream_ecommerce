@@ -6,3 +6,6 @@ node_modules
 
 # Ignore certain folders
 seed
+
+# Ignore log files
+server/*.log
