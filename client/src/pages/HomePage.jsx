@@ -9,7 +9,7 @@ function HomePage() {
       className="h-[100vh] w-full flex flex-col items-center relative overflow-hidden"
     >
       <div className="relative top-[120px] flex flex-col items-center gap-8 px-5">
-        <h1 className="uppercase font-bold text-wine-berry text-5xl text-center tracking-wide">
+        <h1 className="uppercase font-bold text-wine-berry text-5xl text-center">
           "scoop up some sweetness!
         </h1>
 
@@ -33,9 +33,7 @@ function HomePage() {
             to="/products"
             className="bg-wine-berry rounded-full h-13 w-40 absolute top-60 flex items-center justify-center"
           >
-            <span className="text-candle-light text-sm tracking-wide">
-              Shop Now
-            </span>
+            <span className="text-candle-light text-sm">Shop Now</span>
           </Link>
         </div>
       </div>
