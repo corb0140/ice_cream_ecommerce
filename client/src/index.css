@@ -1,13 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+
 @import "tailwindcss";
 
 @theme {
-  --font-family-sans: "Inter", sans-serif;
+  --font-anton: "Anton", sans-serif;
 
   /* COLORS */
-  --color-primary: #2563eb; /* blue-600 */
+  --color-early-dawn: #fffbe5;
+  --color-wine-berry: #45162b;
+  --color-wewak: #f198c1;
+  --color-toledo: #3d0019;
+  --color-candle-light: #fede18;
+  --color-livid-brown: #472032;
 }
 
 @layer base {
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-anton);
+    color: var(--color-toledo);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-oswald);
+    font-weight: 700;
+  }
+
+  button,
+  a {
+    cursor: pointer;
+  }
 }
 
 @layer components {

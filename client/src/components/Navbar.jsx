@@ -1,12 +1,33 @@
-// import { useState } from "react";
+import { useState } from "react";
 // import { motion } from "framer-motion";
 // import { useNavigate } from "react-router-dom";
+import { Menu } from "lucide-react";
+
+import NavModal from "./NavModal";
 
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <nav className="h-16 w-full bg-primary fixed top-0">
-      <p className="text-white">Navbar</p>
-    </nav>
+    <>
+      <nav
+        className="h-12 w-[90%] bg-wine-berry fixed z-50 left-1/2 -translate-x-1/2 top-5 rounded-full
+    flex items-center justify-between px-4"
+      >
+        <p className="text-white">Sweet Tooth</p>
+
+        <button onClick={() => setIsOpen(!isOpen)} className="p-2">
+          <Menu className="text-white" />
+        </button>
+      </nav>
+
+      {isOpen && (
+        <NavModal
+          close={() => {
+            setIsOpen(!isOpen);
+          }}
+        />
+      )}
+    </>
   );
 }
 
