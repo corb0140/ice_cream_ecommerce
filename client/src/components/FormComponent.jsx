@@ -1,6 +1,12 @@
 import { Eye, EyeClosed } from "lucide-react";
 
-function FormInputs({ name, type, showIcon = false }) {
+function FormInputs({
+  name,
+  type,
+  showIcon = false,
+  value = "",
+  setValue = () => {},
+}) {
   return (
     <div className="flex flex-col">
       <label htmlFor={name} className="text-wewak">
@@ -8,7 +14,16 @@ function FormInputs({ name, type, showIcon = false }) {
       </label>
 
       <div className="flex items-center justify-between border-b">
-        <input type={type} name={name} className="outline-none p-1" />
+        <input
+          type={type}
+          name={name}
+          className="outline-none p-1"
+          value={value}
+          onChange={(e) => {
+            setValue(e.target.value);
+          }}
+          required
+        />
 
         {showIcon && (
           <span className="icon cursor-pointer" onClick={showIcon}>
@@ -24,16 +39,4 @@ function FormInputs({ name, type, showIcon = false }) {
   );
 }
 
-function FormButton({ text, onClick }) {
-  return (
-    <button
-      type="button"
-      className="bg-wine-berry text-white px-4 py-2 rounded hover:bg-livid-brown transition-colors"
-      onClick={onClick}
-    >
-      {text}
-    </button>
-  );
-}
-
-export { FormButton, FormInputs };
+export default FormInputs;

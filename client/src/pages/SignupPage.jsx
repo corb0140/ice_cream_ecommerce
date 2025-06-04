@@ -5,20 +5,43 @@ import { Link } from "react-router-dom";
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
-  const handleLoginSubmit = (e) => {
+  const handleSignupSubmit = (e) => {
     e.preventDefault();
 
     //handle form submission. send data to the server
     console.log("Form submitted:", formData);
 
-    // reset form after submission
+    // Validate form data
+    // check if password matches confirmPassword
+    if (formData.password !== formData.confirmPassword) {
+      return alert("Passwords do not match!");
+    }
+
+    //password validation
+    const passwordRegex = /^(?=.*[!@#$%^&*])(?=.{8,})/;
+    if (!passwordRegex.test(formData.password)) {
+      return alert(
+        "Password must be at least 8 characters long and contain at least one special character."
+      );
+    }
+
+    // email validation
+    if (!formData.email.includes("@")) {
+      return alert("Please enter a valid email address.");
+    }
+
+    // Reset form after submission
     setFormData({
+      name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     });
   };
 
@@ -30,16 +53,25 @@ function LoginPage() {
       >
         {/* MESSAGE */}
         <section className="flex flex-col gap-2">
-          <h2 className="text-white text-2xl">Log In</h2>
-          <p>Log in and start ordering your favorite ice cream today</p>
+          <h2 className="text-white text-2xl">Sign Up</h2>
+          <p>
+            Get started by creating an account. It takes less than a minute to
+            register
+          </p>
         </section>
 
         {/* FORM */}
         <form
           action=""
-          onSubmit={handleLoginSubmit}
+          onSubmit={handleSignupSubmit}
           className="flex flex-col gap-5"
         >
+          <FormInputs
+            name="Name"
+            type="text"
+            value={formData.name}
+            setValue={(value) => setFormData({ ...formData, name: value })}
+          />
           <FormInputs
             name="Email"
             type="email"
@@ -55,12 +87,15 @@ function LoginPage() {
             setValue={(value) => setFormData({ ...formData, password: value })}
           />
 
-          <button
-            type="button"
-            className="text-wewak text-sm inline-flex justify-end"
-          >
-            Forgot Password?
-          </button>
+          <FormInputs
+            name="ConfirmPassword"
+            type={showPassword === true ? "text" : "password"}
+            showIcon={() => setShowPassword(!showPassword)}
+            value={formData.confirmPassword}
+            setValue={(value) =>
+              setFormData({ ...formData, confirmPassword: value })
+            }
+          />
 
           <div className="flex flex-col gap-5">
             <button
@@ -68,13 +103,13 @@ function LoginPage() {
               className="border-3 border-wewak text-wewak inline-flex w-fit px-10 py-2 rounded font-semibold
               hover:bg-wewak hover:text-white transition-colors duration-300"
             >
-              Login
+              Sign Up
             </button>
 
             <p>
-              Don't have an account?{" "}
-              <Link to={"/signup"} className="text-wewak font-bold">
-                Sign Up
+              Already have an account?{" "}
+              <Link to={"/login"} className="text-wewak font-bold">
+                Login
               </Link>
             </p>
           </div>
