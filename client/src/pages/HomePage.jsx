@@ -1,10 +1,12 @@
 import ice_cream_banner from "@/assets/imgs/ice-cream-banner.png";
 
+import { Link } from "react-router-dom";
+
 function HomePage() {
   return (
     <div
       id="hero_banner"
-      className="bg-early-dawn h-[100vh] w-full flex flex-col items-center relative overflow-hidden"
+      className="h-[100vh] w-full flex flex-col items-center relative overflow-hidden"
     >
       <div className="relative top-[120px] flex flex-col items-center gap-8 px-5">
         <h1 className="uppercase font-bold text-wine-berry text-5xl text-center tracking-wide">
@@ -27,9 +29,14 @@ function HomePage() {
             className="h-100 w-full object-cover"
           />
 
-          <button className="bg-wine-berry rounded-full h-14 w-40 text-candle-light text-sm tracking-wide absolute top-60">
-            Shop Now
-          </button>
+          <Link
+            to="/products"
+            className="bg-wine-berry rounded-full h-13 w-40 absolute top-60 flex items-center justify-center"
+          >
+            <span className="text-candle-light text-sm tracking-wide">
+              Shop Now
+            </span>
+          </Link>
         </div>
       </div>
     </div>

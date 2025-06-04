@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { motion } from "framer-motion";
+import { AnimatePresence } from "motion/react";
 // import { useNavigate } from "react-router-dom";
 import { Menu } from "lucide-react";
 
@@ -20,13 +20,16 @@ function Navbar() {
         </button>
       </nav>
 
-      {isOpen && (
-        <NavModal
-          close={() => {
-            setIsOpen(!isOpen);
-          }}
-        />
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <NavModal
+            key={"nav-modal"}
+            close={() => {
+              setIsOpen(!isOpen);
+            }}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }

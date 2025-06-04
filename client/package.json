@@ -16,7 +16,7 @@
     "js-cookie": "^3.0.5",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.511.0",
-    "motion": "^12.12.1",
+    "motion": "^12.16.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",

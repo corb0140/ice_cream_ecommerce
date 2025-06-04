@@ -2,11 +2,17 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "@/components/Layout";
 
 import HomePage from "@/pages/HomePage";
+import LoginPage from "../pages/LoginPage";
+import ProductsPage from "@/pages/ProductsPage";
 
 function AppRouter() {
   //   const adminRoute = [];
 
-  const routes = [{ path: "/", element: <HomePage /> }];
+  const routes = [
+    { path: "/", element: <HomePage /> },
+    { path: "/login", element: <LoginPage /> },
+    { path: "/products", element: <ProductsPage /> },
+  ];
 
   return (
     <Router>
