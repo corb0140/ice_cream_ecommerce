@@ -6,8 +6,11 @@ import LoginPage from "@/pages/LoginPage";
 import SignupPage from "@/pages/SignupPage";
 import ProductsPage from "@/pages/ProductsPage";
 
+import AdminRoute from "./admin-route";
+import Dashboard from "@/pages/Dashboard";
+
 function AppRouter() {
-  //   const adminRoute = [];
+  // Admin Only Routes
 
   const routes = [
     { path: "/", element: <HomePage /> },
@@ -27,6 +30,9 @@ function AppRouter() {
         </Route>
 
         {/* ADMIN ROUTE */}
+        <Route element={<AdminRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
       </Routes>
     </Router>
   );

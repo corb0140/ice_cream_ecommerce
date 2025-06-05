@@ -13,7 +13,7 @@ const validateRefreshToken = (req, res) => {
       { id: user.id },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: `${process.env.ACCESS_TOKEN_EXPIRATION}m`,
+        expiresIn: `${process.env.ACCESS_TOKEN_EXPIRES_IN}m`,
       }
     );
     res.cookie("accessToken", newAccessToken, { httpOnly: true });

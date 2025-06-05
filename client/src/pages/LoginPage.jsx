@@ -1,6 +1,11 @@
 import { useState } from "react";
 import FormInputs from "@/components/FormComponent";
 import { Link } from "react-router-dom";
+import Loader from "@/components/Loader";
+import { useLoginMutation } from "@/lib/state/apiSlice";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "@/lib/state/authSlice";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -8,12 +13,45 @@ function LoginPage() {
     email: "",
     password: "",
   });
+  const [login, { isLoading, error }] = useLoginMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleLoginSubmit = (e) => {
+  if (isLoading || error) {
+    return <Loader isLoading={isLoading} error={error} />;
+  }
+
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
     //handle form submission. send data to the server
-    console.log("Form submitted:", formData);
+    try {
+      const userData = await login({
+        identifier: formData.email,
+        password: formData.password,
+      }).unwrap(); // unwrap to get the data directly
+
+      alert("Login Successful!");
+
+      // check if userData contains data
+      console.log("User Data:", userData);
+
+      if (userData?.data) {
+        // dispatch the user data to the store
+        dispatch(
+          setCredentials({
+            user: userData.data.user,
+            accessToken: userData.data.accessToken,
+          })
+        );
+      }
+
+      // redirect to home page
+      navigate("/");
+    } catch (err) {
+      console.error("Login failed:", err);
+      return;
+    }
 
     // reset form after submission
     setFormData({
@@ -65,10 +103,11 @@ function LoginPage() {
           <div className="flex flex-col gap-5">
             <button
               type="submit"
+              disabled={isLoading}
               className="border-3 border-wewak text-wewak inline-flex w-fit px-10 py-2 rounded font-semibold
               hover:bg-wewak hover:text-white transition-colors duration-300"
             >
-              Login
+              {isLoading ? "Logging in..." : "Log In"}
             </button>
 
             <p>

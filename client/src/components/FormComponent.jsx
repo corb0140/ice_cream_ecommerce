@@ -17,7 +17,7 @@ function FormInputs({
         <input
           type={type}
           name={name}
-          className="outline-none p-1"
+          className="outline-none p-1 flex-1"
           value={value}
           onChange={(e) => {
             setValue(e.target.value);
