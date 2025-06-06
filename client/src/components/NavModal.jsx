@@ -11,7 +11,9 @@ const links = [
   { name: "Contact Us", path: "/contact" },
 ];
 
-function NavModal({ close }) {
+function NavModal({ close, user }) {
+  console.log("user", user);
+
   const modalVariants = {
     hidden: { opacity: 0, x: 100 },
     visible: {
@@ -41,7 +43,7 @@ function NavModal({ close }) {
       exit="exit"
       className="fixed z-100 right-0 h-full w-2/4 bg-wine-berry shadow-lg"
     >
-      <div className="flex flex-col items-center gap-10 h-full p-4">
+      <div className="flex flex-col items-center gap-10 h-full py-4">
         {/* EXIT */}
         <CircleX
           onClick={close}
@@ -51,9 +53,11 @@ function NavModal({ close }) {
         />
 
         {/* PROFILE, FAVORITES & CART */}
-        <div className="flex flex-col gap-5 items-center">
+        <div className="w-full flex flex-col p-2 gap-5 items-center justify-center">
           <div className="h-25 w-25 rounded-full border border-wewak"></div>
-          <h1 className="text-xl text-wewak">{"Guest"}</h1>
+          <h1 className="w-full text-xl break-words px-2 text-wewak text-center">
+            {user?.username || "Guest"}
+          </h1>
 
           <ul className="flex items-center gap-3">
             <li>

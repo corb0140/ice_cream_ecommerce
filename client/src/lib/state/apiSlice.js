@@ -4,7 +4,7 @@ import { baseQueryWithReauth } from "./baseQueryWithReauth";
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["User", "Product", "Cart"],
+  tagTypes: ["User", "Product", "Cart"], // Define tag types for cache invalidation
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (credentials) => ({
@@ -42,13 +42,7 @@ export const apiSlice = createApi({
     // USERS
     getUser: builder.query({
       query: () => "/user/me",
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: "Product", id })),
-              { type: "Product", id: "LIST" },
-            ]
-          : [{ type: "Product", id: "LIST" }],
+      providesTags: ["User"],
     }),
 
     // PRODUCTS

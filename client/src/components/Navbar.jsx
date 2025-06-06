@@ -2,11 +2,17 @@ import { useState } from "react";
 import { AnimatePresence } from "motion/react";
 // import { useNavigate } from "react-router-dom";
 import { Menu } from "lucide-react";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "@/lib/state/authSlice";
 
 import NavModal from "./NavModal";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const currentUser = useSelector(selectCurrentUser);
+
+  console.log("currentUser", currentUser);
+
   return (
     <>
       <nav
@@ -23,6 +29,7 @@ function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <NavModal
+            user={currentUser}
             key={"nav-modal"}
             close={() => {
               setIsOpen(!isOpen);

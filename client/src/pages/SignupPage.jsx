@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useSignupMutation } from "@/lib/state/apiSlice";
 import Loader from "@/components/Loader";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,11 +14,11 @@ function LoginPage() {
     password: "",
     confirmPassword: "",
   });
-  const [signup, { isLoading, error }] = useSignupMutation();
+  const [signup, { isLoading }] = useSignupMutation();
   const navigate = useNavigate();
 
-  if (isLoading || error) {
-    return <Loader isLoading={isLoading} error={error} />;
+  if (isLoading) {
+    return <Loader isLoading={isLoading} />;
   }
 
   const handleSignupSubmit = async (e) => {
@@ -26,20 +27,20 @@ function LoginPage() {
     // Validate form data
     // check if password matches confirmPassword
     if (formData.password !== formData.confirmPassword) {
-      return alert("Passwords do not match!");
+      return toast.error("Passwords do not match!");
     }
 
     //password validation
     const passwordRegex = /^(?=.*[!@#$%^&*])(?=.{8,})/;
     if (!passwordRegex.test(formData.password)) {
-      return alert(
+      return toast.error(
         "Password must be at least 8 characters long and contain at least one special character."
       );
     }
 
     // email validation
     if (!formData.email.includes("@")) {
-      return alert("Please enter a valid email address.");
+      return toast.error("Please enter a valid email address.");
     }
 
     //handle form submission. send data to the server
@@ -50,10 +51,11 @@ function LoginPage() {
         username: formData.name,
       }).unwrap();
 
-      alert("Signup successful! You can now login.");
       navigate("/login");
     } catch (err) {
-      console.error("Signup failed:", err);
+      toast.error(
+        "Signup failed: " + (err?.data?.message || "Please try again later.")
+      );
       return;
     }
 
@@ -68,6 +70,9 @@ function LoginPage() {
 
   return (
     <div className="h-screen overflow-hidden p-10">
+      <div>
+        <Toaster position="top-center" />
+      </div>
       <div
         className="relative top-[80px] h-[calc(100%-80px)] bg-wine-berry rounded-lg shadow-[2px_2px_10px] shadow-livid-brown
         flex flex-col gap-10 p-5 text-white"

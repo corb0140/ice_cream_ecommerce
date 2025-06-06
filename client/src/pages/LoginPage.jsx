@@ -6,6 +6,8 @@ import { useLoginMutation } from "@/lib/state/apiSlice";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "@/lib/state/authSlice";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import Cookie from "js-cookie";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,12 +15,13 @@ function LoginPage() {
     email: "",
     password: "",
   });
-  const [login, { isLoading, error }] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const accessToken = Cookie.get("accessToken");
 
-  if (isLoading || error) {
-    return <Loader isLoading={isLoading} error={error} />;
+  if (isLoading) {
+    return <Loader isLoading={isLoading} />;
   }
 
   const handleLoginSubmit = async (e) => {
@@ -31,25 +34,26 @@ function LoginPage() {
         password: formData.password,
       }).unwrap(); // unwrap to get the data directly
 
-      alert("Login Successful!");
-
-      // check if userData contains data
-      console.log("User Data:", userData);
-
-      if (userData?.data) {
+      if (userData?.user) {
         // dispatch the user data to the store
         dispatch(
           setCredentials({
-            user: userData.data.user,
-            accessToken: userData.data.accessToken,
+            user: userData.user,
+            accessToken: accessToken,
           })
         );
       }
 
+      toast.success("Login successful! Redirecting to home page...");
+
       // redirect to home page
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 1500); // delay for toast to show
     } catch (err) {
-      console.error("Login failed:", err);
+      toast.error(
+        "Login failed: " + (err?.data?.message || "Please try again later.")
+      );
       return;
     }
 
@@ -62,6 +66,10 @@ function LoginPage() {
 
   return (
     <div className="h-screen overflow-hidden p-10">
+      <div>
+        <Toaster position="top-center" />
+      </div>
+
       <div
         className="relative top-[80px] h-[calc(100%-80px)] bg-wine-berry rounded-lg shadow-[2px_2px_10px] shadow-livid-brown
         flex flex-col gap-10 p-5 text-white"

@@ -1,13 +1,28 @@
 import ice_cream_banner from "@/assets/imgs/ice-cream-banner.png";
 
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "@/lib/state/authSlice";
+import toast, { Toaster } from "react-hot-toast";
 
 function HomePage() {
+  const currentUser = useSelector(selectCurrentUser);
+  const hasShownToast = useRef(false);
+
+  useEffect(() => {
+    if (!hasShownToast.current && currentUser) {
+      toast(`Welcome, ${currentUser.username}!`);
+      hasShownToast.current = true;
+    }
+  }, [currentUser]);
+
   return (
     <div
       id="hero_banner"
       className="h-[100vh] w-full flex flex-col items-center relative overflow-hidden"
     >
+      <Toaster position="top-center" toastOptions={{ duration: 1500 }} />
       <div className="relative top-[120px] flex flex-col items-center gap-8 px-5">
         <h1 className="uppercase font-bold text-wine-berry text-5xl text-center">
           "scoop up some sweetness!
