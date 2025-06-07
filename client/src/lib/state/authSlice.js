@@ -14,14 +14,14 @@ const authSlice = createSlice({
       state.accessToken = action.payload.accessToken;
     },
 
-    logout: (state) => {
+    clearCredentials: (state) => {
       state.user = null;
       state.accessToken = null;
     },
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, clearCredentials } = authSlice.actions;
 export default authSlice.reducer;
 
 export const selectCurrentUser = (state) => state.auth.user;

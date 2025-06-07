@@ -2,6 +2,9 @@ import { CircleX, Heart, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
+import { useLogoutMutation } from "../lib/state/apiSlice";
+import { useDispatch } from "react-redux";
+import { clearCredentials } from "@/lib/state/authSlice";
 
 // Links
 const links = [
@@ -12,7 +15,22 @@ const links = [
 ];
 
 function NavModal({ close, user }) {
-  console.log("user", user);
+  console.log("user:", user);
+  const dispatch = useDispatch();
+
+  const [logout] = useLogoutMutation();
+
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap(); // Call the logout mutation
+
+      dispatch(clearCredentials()); // Clear user credentials in Redux store
+
+      close();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   const modalVariants = {
     hidden: { opacity: 0, x: 100 },
@@ -94,22 +112,33 @@ function NavModal({ close, user }) {
         </ul>
 
         {/* AUTH */}
-        <div className="flex flex-col gap-4">
-          <Link
-            to="/login"
-            onClick={close}
-            className="flex justify-center bg-toledo text-candle-light rounded-md px-4 py-2 hover:bg-wewak hover:text-livid-brown transition-colors duration-300"
-          >
-            Login
-          </Link>
-          <Link
-            to="/register"
-            onClick={close}
-            className="flex justify-center bg-toledo text-candle-light rounded-md px-4 py-2 hover:bg-wewak hover:text-livid-brown transition-colors duration-300"
-          >
-            Register
-          </Link>
-        </div>
+        {!user ? (
+          <div className="flex flex-col gap-4">
+            <Link
+              to="/login"
+              onClick={close}
+              className="flex justify-center bg-toledo text-candle-light rounded-md px-4 py-2 hover:bg-wewak hover:text-livid-brown transition-colors duration-300"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              onClick={close}
+              className="flex justify-center bg-toledo text-candle-light rounded-md px-4 py-2 hover:bg-wewak hover:text-livid-brown transition-colors duration-300"
+            >
+              Register
+            </Link>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-4">
+            <button
+              onClick={handleLogout}
+              className="flex justify-center bg-toledo text-candle-light rounded-md px-4 py-2 hover:bg-wewak hover:text-livid-brown transition-colors duration-300"
+            >
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </motion.div>
   );

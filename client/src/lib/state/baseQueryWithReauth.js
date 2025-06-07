@@ -1,6 +1,6 @@
 // src/app/baseQueryWithReauth.js
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { logout, setCredentials } from "@/lib/state/authSlice";
+import { clearCredentials, setCredentials } from "@/lib/state/authSlice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_API_URL,
@@ -23,7 +23,7 @@ export const baseQueryWithReauth = async (args, api, extraOptions) => {
       // Retry the original request
       result = await baseQuery(args, api, extraOptions);
     } else {
-      api.dispatch(logout());
+      api.dispatch(clearCredentials());
     }
   }
 
