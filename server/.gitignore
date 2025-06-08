@@ -10,3 +10,5 @@ seed
 # Logs
 logs
 *.log
+
+storageKey.json

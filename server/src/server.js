@@ -17,6 +17,7 @@ const adminRoutes = require("./routes/adminRoutes");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
+const imageRoutes = require("./routes/imageRoute");
 
 // ROUTES
 app.use("/auth", authRoutes);
@@ -24,6 +25,7 @@ app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use("/products", productRoutes);
 app.use("/cart", cartRoutes);
+app.use("/images", imageRoutes);
 
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "healthy" });
