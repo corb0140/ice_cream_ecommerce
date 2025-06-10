@@ -4,7 +4,7 @@ import { baseQueryWithReauth } from "./baseQueryWithReauth";
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["User", "Product", "Cart"], // Define tag types for cache invalidation
+  tagTypes: ["User", "Product", "Cart", "Image"], // Define tag types for cache invalidation
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (credentials) => ({
@@ -37,6 +37,16 @@ export const apiSlice = createApi({
         url: "/auth/refresh",
         method: "POST",
       }),
+    }),
+
+    // IMAGES
+    uploadImage: builder.mutation({
+      query: (formData) => ({
+        url: "/images/upload",
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ["Image"],
     }),
 
     // USERS
@@ -128,6 +138,7 @@ export const {
   useLogoutMutation,
   useVerifyEmailMutation,
   useRefreshMutation,
+  useUploadImageMutation,
   useGetUserQuery,
   useGetProductsQuery,
   useGetProductByIdQuery,

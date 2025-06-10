@@ -2,6 +2,7 @@
 const { Storage } = require("@google-cloud/storage");
 const path = require("path");
 const uuid = require("uuid").v4;
+const pool = require("../config/db");
 
 const keyFilePath = process.env.GOOGLE_STORAGE_KEY_FILE;
 
@@ -40,4 +41,36 @@ const uploadImage = async (file) => {
   }
 };
 
-module.exports = { uploadImage };
+const saveImageToUser = async (image_url, user_id) => {
+  const { rows } = await pool.query(
+    "INSERT INTO profile_images (user_id, image_url) VALUES ($1, $2) RETURNING *",
+    [user_id, image_url]
+  );
+
+  return rows[0];
+};
+
+const updateUserImage = async (image_url, user_id) => {
+  const { rows } = await pool.query(
+    "UPDATE profile_images SET image_url = $1 WHERE user_id = $2 RETURNING *",
+    [image_url, user_id]
+  );
+
+  return rows[0];
+};
+
+const getUserImage = async (user_id) => {
+  const { rows } = await pool.query(
+    "SELECT image_url FROM profile_images WHERE user_id = $1",
+    [user_id]
+  );
+
+  return rows[0] ? rows[0].image_url : null;
+};
+
+module.exports = {
+  uploadImage,
+  saveImageToUser,
+  updateUserImage,
+  getUserImage,
+};

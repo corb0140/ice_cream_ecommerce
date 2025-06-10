@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
 import { useLogoutMutation } from "../lib/state/apiSlice";
+// import { useUploadImageMutation } from "../lib/state/apiSlice";
 import { useDispatch } from "react-redux";
 import { clearCredentials } from "@/lib/state/authSlice";
 
@@ -19,6 +20,7 @@ function NavModal({ close, user }) {
   const dispatch = useDispatch();
 
   const [logout] = useLogoutMutation();
+  // const [uploadImage] = useUploadImageMutation();
 
   const handleLogout = async () => {
     try {
