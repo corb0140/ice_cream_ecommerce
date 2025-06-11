@@ -8,6 +8,7 @@ import ProductsPage from "@/pages/ProductsPage";
 
 import AdminRoute from "./admin-route";
 import Dashboard from "@/pages/Dashboard";
+import SettingsPage from "@/pages/SettingsPage";
 
 function AppRouter() {
   // Admin Only Routes
@@ -17,6 +18,7 @@ function AppRouter() {
     { path: "/login", element: <LoginPage /> },
     { path: "/signup", element: <SignupPage /> },
     { path: "/products", element: <ProductsPage /> },
+    { path: "/settings", element: <SettingsPage /> }, // Placeholder for SettingsPage
   ];
 
   return (

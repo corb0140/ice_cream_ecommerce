@@ -91,6 +91,7 @@ function LoginPage() {
             type="email"
             value={formData.email}
             setValue={(value) => setFormData({ ...formData, email: value })}
+            isRequired={true}
           />
 
           <FormInputs
@@ -99,6 +100,7 @@ function LoginPage() {
             showIcon={() => setShowPassword(!showPassword)}
             value={formData.password}
             setValue={(value) => setFormData({ ...formData, password: value })}
+            isRequired={true}
           />
 
           <button

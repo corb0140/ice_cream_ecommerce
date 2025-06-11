@@ -6,7 +6,24 @@ function FormInputs({
   showIcon = false,
   value = "",
   setValue = () => {},
+  accept = "",
+  onFileChange = null,
+  isRequired = true,
 }) {
+  const handleInputChange = (e) => {
+    if (type === "file") {
+      const files = e.target.files;
+      setValue(files[0]);
+
+      // trigger optional file preview function
+      if (onFileChange && typeof onFileChange === "function") {
+        onFileChange(e);
+      }
+    } else {
+      setValue(e.target.value);
+    }
+  };
+
   return (
     <div className="flex flex-col">
       <label htmlFor={name} className="text-wewak">
@@ -18,11 +35,10 @@ function FormInputs({
           type={type}
           name={name}
           className="outline-none p-1 flex-1"
-          value={value}
-          onChange={(e) => {
-            setValue(e.target.value);
-          }}
-          required
+          accept={accept}
+          value={type === "file" ? undefined : value}
+          onChange={handleInputChange}
+          required={isRequired}
         />
 
         {showIcon && (

@@ -49,6 +49,20 @@ export const apiSlice = createApi({
       invalidatesTags: ["Image"],
     }),
 
+    getUserImage: builder.query({
+      query: () => "/images/user",
+      providesTags: ["Image"],
+    }),
+
+    updateUserImage: builder.mutation({
+      query: (formData) => ({
+        url: "/images/update",
+        method: "PUT",
+        body: formData,
+      }),
+      invalidatesTags: ["Image"],
+    }),
+
     // USERS
     getUser: builder.query({
       query: () => "/user/me",
@@ -139,6 +153,8 @@ export const {
   useVerifyEmailMutation,
   useRefreshMutation,
   useUploadImageMutation,
+  useGetUserImageQuery,
+  useUpdateUserImageMutation,
   useGetUserQuery,
   useGetProductsQuery,
   useGetProductByIdQuery,

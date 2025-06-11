@@ -30,14 +30,31 @@ const uploadImage = async (file) => {
       resumable: false,
       metadata: {
         contentType: file.mimetype,
-        predefinedAcl: "publicRead",
+        // predefinedAcl: "publicRead",
       },
     });
 
-    return `https://storage.googleapis.com/${process.env.GOOGLE_CLOUD_BUCKET}/${gcsFileName}`;
+    return gcsFileName;
+    // return `https://storage.googleapis.com/${process.env.GOOGLE_CLOUD_BUCKET}/${gcsFileName}`;
   } catch (error) {
     console.error("Error uploading file to Google Cloud Storage:", error);
     throw new Error("Failed to upload image");
+  }
+};
+
+const getSignedImageUrl = async (fileName) => {
+  const file = bucket.file(fileName);
+
+  try {
+    const [url] = await file.getSignedUrl({
+      action: "read",
+      expires: Date.now() + 24 * 60 * 60 * 1000, // 1 day
+    });
+
+    return url;
+  } catch (error) {
+    console.error("Error getting signed URL:", error);
+    throw new Error("Failed to get signed URL");
   }
 };
 
@@ -65,11 +82,16 @@ const getUserImage = async (user_id) => {
     [user_id]
   );
 
-  return rows[0] ? rows[0].image_url : null;
+  if (!rows[0]) return null;
+  const signedUrl = await getSignedImageUrl(rows[0].image_url);
+
+  return signedUrl;
+  // return rows[0] ? rows[0].image_url : null;
 };
 
 module.exports = {
   uploadImage,
+  getSignedImageUrl,
   saveImageToUser,
   updateUserImage,
   getUserImage,

@@ -97,12 +97,15 @@ function LoginPage() {
             type="text"
             value={formData.name}
             setValue={(value) => setFormData({ ...formData, name: value })}
+            isRequired={true}
           />
+
           <FormInputs
             name="Email"
             type="email"
             value={formData.email}
             setValue={(value) => setFormData({ ...formData, email: value })}
+            isRequired={true}
           />
 
           <FormInputs
@@ -121,6 +124,7 @@ function LoginPage() {
             setValue={(value) =>
               setFormData({ ...formData, confirmPassword: value })
             }
+            isRequired={true}
           />
 
           <div className="flex flex-col gap-5">

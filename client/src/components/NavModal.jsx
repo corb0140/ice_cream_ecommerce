@@ -4,30 +4,41 @@ import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { useLogoutMutation } from "../lib/state/apiSlice";
 // import { useUploadImageMutation } from "../lib/state/apiSlice";
+import { useGetUserImageQuery } from "../lib/state/apiSlice";
 import { useDispatch } from "react-redux";
 import { clearCredentials } from "@/lib/state/authSlice";
+import { useEffect, useState } from "react";
 
 // Links
 const links = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
-  { name: "Services", path: "/services" },
+  { name: "Settings", path: "/settings" },
   { name: "Contact Us", path: "/contact" },
 ];
 
 function NavModal({ close, user }) {
   console.log("user:", user);
+
   const dispatch = useDispatch();
+  const [image, setImage] = useState(null); // State to hold the user image
 
   const [logout] = useLogoutMutation();
-  // const [uploadImage] = useUploadImageMutation();
+  const { data: userImage, isSuccess } = useGetUserImageQuery(undefined, {
+    skip: !user,
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setImage(userImage?.imageUrl || null);
+    }
+  }, [isSuccess, userImage]);
 
   const handleLogout = async () => {
     try {
       await logout().unwrap(); // Call the logout mutation
 
       dispatch(clearCredentials()); // Clear user credentials in Redux store
-
       close();
     } catch (error) {
       console.error("Logout failed:", error);
@@ -74,7 +85,14 @@ function NavModal({ close, user }) {
 
         {/* PROFILE, FAVORITES & CART */}
         <div className="w-full flex flex-col p-2 gap-5 items-center justify-center">
-          <div className="h-25 w-25 rounded-full border border-wewak"></div>
+          <div className="h-25 w-25 rounded-full">
+            <img
+              src={image || "https://placehold.co/600x400"}
+              alt="User"
+              className="h-full w-full object-cover rounded-full"
+            />
+          </div>
+
           <h1 className="w-full text-xl break-words px-2 text-wewak text-center">
             {user?.username || "Guest"}
           </h1>
