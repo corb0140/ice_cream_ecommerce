@@ -18,7 +18,7 @@ function AppRouter() {
     { path: "/login", element: <LoginPage /> },
     { path: "/signup", element: <SignupPage /> },
     { path: "/products", element: <ProductsPage /> },
-    { path: "/settings", element: <SettingsPage /> }, // Placeholder for SettingsPage
+    { path: "/settings", element: <SettingsPage /> },
   ];
 
   return (
@@ -29,11 +29,11 @@ function AppRouter() {
           {routes.map(({ path, element }) => (
             <Route key={path} path={path} element={element} />
           ))}
-        </Route>
 
-        {/* ADMIN ROUTE */}
-        <Route element={<AdminRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+          {/* ADMIN ROUTE */}
+          <Route element={<AdminRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
         </Route>
       </Routes>
     </Router>

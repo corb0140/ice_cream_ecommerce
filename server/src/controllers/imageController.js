@@ -8,7 +8,6 @@ const uploadImage = async (req, res) => {
 
     if (!file) return res.status(400).json({ error: "No file uploaded" });
 
-    // const imageUrl = await imageService.uploadImage(req.file);
     const fileName = await imageService.uploadImage(file);
     const savedImage = await imageService.saveImageToUser(fileName, user_id);
 

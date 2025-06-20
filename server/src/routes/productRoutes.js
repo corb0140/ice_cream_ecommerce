@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { authenticate, authorize } = require("../middleware/authMiddleware");
 const productController = require("../controllers/productController");
+const uploadImage = require("../middleware/uploadImage");
 
 const router = Router();
 
@@ -11,12 +12,14 @@ router.get("/:id", productController.getProductById);
 router.post(
   "/",
   authenticate,
+  uploadImage,
   authorize(["admin"]),
   productController.createProduct
 );
 router.put(
   "/:id",
   authenticate,
+  uploadImage,
   authorize(["admin"]),
   productController.updateProduct
 );

@@ -30,12 +30,10 @@ const uploadImage = async (file) => {
       resumable: false,
       metadata: {
         contentType: file.mimetype,
-        // predefinedAcl: "publicRead",
       },
     });
 
     return gcsFileName;
-    // return `https://storage.googleapis.com/${process.env.GOOGLE_CLOUD_BUCKET}/${gcsFileName}`;
   } catch (error) {
     console.error("Error uploading file to Google Cloud Storage:", error);
     throw new Error("Failed to upload image");

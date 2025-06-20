@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
 import { useLogoutMutation } from "../lib/state/apiSlice";
-// import { useUploadImageMutation } from "../lib/state/apiSlice";
 import { useGetUserImageQuery } from "../lib/state/apiSlice";
 import { useDispatch } from "react-redux";
 import { clearCredentials } from "@/lib/state/authSlice";
@@ -15,6 +14,7 @@ const links = [
   { name: "About", path: "/about" },
   { name: "Settings", path: "/settings" },
   { name: "Contact Us", path: "/contact" },
+  { name: "Dashboard", path: "/dashboard" },
 ];
 
 function NavModal({ close, user }) {
@@ -113,22 +113,26 @@ function NavModal({ close, user }) {
 
         {/* NAVIGATION LINKS */}
         <ul className="flex flex-col gap-4">
-          {links.map((link, index) => {
-            return (
-              <li
-                key={index}
-                className="group flex items-center justify-center w-25 h-9 rounded-md transition-colors duration-300 focus-within:bg-wewak"
-              >
-                <Link
-                  to={link.path}
-                  onClick={close}
-                  className="flex items-center justify-center rounded-md w-full h-9 text-sm font-semibold text-wewak hover:bg-wewak hover:text-livid-brown focus:text-livid-brown"
+          {links
+            .filter(
+              (link) => user?.role === "admin" || link.name !== "Dashboard"
+            )
+            .map((link, index) => {
+              return (
+                <li
+                  key={index}
+                  className="group flex items-center justify-center w-25 h-9 rounded-md transition-colors duration-300 focus-within:bg-wewak"
                 >
-                  {link.name}
-                </Link>
-              </li>
-            );
-          })}
+                  <Link
+                    to={link.path}
+                    onClick={close}
+                    className="flex items-center justify-center rounded-md w-full h-9 text-sm font-semibold text-wewak hover:bg-wewak hover:text-livid-brown focus:text-livid-brown"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              );
+            })}
         </ul>
 
         {/* AUTH */}
@@ -142,7 +146,7 @@ function NavModal({ close, user }) {
               Login
             </Link>
             <Link
-              to="/register"
+              to="/signup"
               onClick={close}
               className="flex justify-center bg-toledo text-candle-light rounded-md px-4 py-2 hover:bg-wewak hover:text-livid-brown transition-colors duration-300"
             >

@@ -1,7 +1,15 @@
 const pool = require("../config/db");
+const { getSignedImageUrl } = require("./imageService");
 
 const getAllProducts = async () => {
   const { rows } = await pool.query("SELECT * FROM products");
+
+  // Map through the rows to get signed URLs for images
+  for (const product of rows) {
+    if (product.image_url) {
+      product.image_url = await getSignedImageUrl(product.image_url);
+    }
+  }
 
   return rows;
 };
