@@ -62,14 +62,22 @@ const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, description, price, stock } = req.body;
+    // const file = req.file;
 
-    const updatedProduct = await productService.updateProduct(id, {
-      name,
-      description,
-      price,
-      stock,
-      image_url,
-    });
+    const updateFields = {};
+    if (req.body.name !== undefined) updateFields.name = name;
+    if (req.body.description !== undefined)
+      updateFields.description = description;
+    if (req.body.price !== undefined) updateFields.price = price;
+    if (req.body.stock !== undefined) updateFields.stock = stock;
+
+    // if (req.file) {
+    //   const image_url = await imageService.uploadImage(file);
+    //   updateFields.image_url = image_url;
+    // }
+
+    const updatedProduct = await productService.updateProduct(id, updateFields);
+
     if (!updatedProduct) {
       return res.status(404).json({ message: "Product not found" });
     }

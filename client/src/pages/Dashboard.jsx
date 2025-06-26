@@ -3,15 +3,26 @@ import CreateProductModal from "@/components/CreateProductModal";
 import {
   useGetProductsQuery,
   useDeleteProductMutation,
-  // useUpdateProductMutation,
+  useUpdateProductMutation,
 } from "@/lib/state/apiSlice";
 
 function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const { data: products = [] } = useGetProductsQuery();
   const [deleteProduct] = useDeleteProductMutation();
+  const [updateProduct] = useUpdateProductMutation();
 
   console.log("Products:", products);
+
+  const handleUpdateProduct = async (id, updatedData) => {
+    try {
+      const response = await updateProduct({ id, ...updatedData }).unwrap();
+      console.log("Product updated successfully:", response);
+    } catch (error) {
+      console.error("Error updating product:", error);
+      alert(`Error updating product: ${error.message}`);
+    }
+  };
 
   const deleteProductById = async (id) => {
     try {
@@ -43,7 +54,7 @@ function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
             {products.map((product) => (
               <div
-                key={product}
+                key={product.id}
                 className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
               >
                 <div className="flex items-center justify-center mb-4">
@@ -69,7 +80,18 @@ function Dashboard() {
                   </div>
 
                   <div className="flex gap-4">
-                    <button className="px-4 py-2 bg-toledo text-white rounded-lg hover:bg-wewak transition duration-300">
+                    <button
+                      onClick={() =>
+                        handleUpdateProduct(product.id, {
+                          name: product.name,
+                          description: product.description,
+                          price: 55.0,
+                          stock: product.stock,
+                          // image_url: product.image_url,
+                        })
+                      }
+                      className="px-4 py-2 bg-toledo text-white rounded-lg hover:bg-wewak transition duration-300"
+                    >
                       Update Product
                     </button>
                     <button

@@ -56,7 +56,7 @@ const updateProduct = async (
   { name, description, price, stock, image_url }
 ) => {
   const { rows } = await pool.query(
-    "UPDATE products SET name = $1, description = $2, price = $3, stock= $4, image_url = $5 WHERE id = $6 RETURNING *",
+    "UPDATE products SET name = $1, description = $2, price = $3, stock = $4, image_url = $5 WHERE id = $6 RETURNING *",
     [name, description, price, stock, image_url, id]
   );
 

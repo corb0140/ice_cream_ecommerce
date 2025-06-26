@@ -10,7 +10,7 @@ const baseQuery = fetchBaseQuery({
 export const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result?.error?.status === 401) {
+  if (result?.error?.status === 401 || result?.error?.status === 403) {
     // Try to refresh token
     const refreshResult = await baseQuery("/auth/refresh", api, extraOptions);
     if (refreshResult?.data) {
@@ -23,6 +23,7 @@ export const baseQueryWithReauth = async (args, api, extraOptions) => {
       // Retry the original request
       result = await baseQuery(args, api, extraOptions);
     } else {
+      console.error("Refresh token failed, clearing credentials.");
       api.dispatch(clearCredentials());
     }
   }

@@ -18,6 +18,11 @@ const validateRefreshToken = (req, res) => {
     );
     res.cookie("accessToken", newAccessToken, { httpOnly: true });
     res.status(200).json({
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
       accessToken: newAccessToken,
       message: "New access token generated",
     });
