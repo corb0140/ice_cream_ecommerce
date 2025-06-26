@@ -1,26 +1,48 @@
 import { useState } from "react";
-import CreateProductModal from "@/components/CreateProductModal";
+import ProductModal from "@/components/ProductModal";
 import {
   useGetProductsQuery,
+  useCreateProductMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,
 } from "@/lib/state/apiSlice";
 
 function Dashboard() {
   const [showModal, setShowModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const { data: products = [] } = useGetProductsQuery();
   const [deleteProduct] = useDeleteProductMutation();
   const [updateProduct] = useUpdateProductMutation();
+  const [createProduct] = useCreateProductMutation();
 
   console.log("Products:", products);
 
-  const handleUpdateProduct = async (id, updatedData) => {
+  const openCreateProductModal = () => {
+    setSelectedProduct(null);
+    setShowModal(true);
+  };
+
+  const openUpdateProductModal = (product) => {
+    setSelectedProduct(product);
+    setShowModal(true);
+  };
+
+  const handleProductFunction = async (formData) => {
     try {
-      const response = await updateProduct({ id, ...updatedData }).unwrap();
-      console.log("Product updated successfully:", response);
+      if (selectedProduct) {
+        const response = await updateProduct({
+          id: selectedProduct.id,
+          product: formData,
+        }).unwrap();
+        console.log("Product updated successfully:", response);
+      } else {
+        const response = await createProduct(formData).unwrap();
+        console.log("Product created successfully:", response);
+      }
+      setShowModal(false);
     } catch (error) {
-      console.error("Error updating product:", error);
-      alert(`Error updating product: ${error.message}`);
+      console.error("Error submitting product:", error);
+      alert(`Error submitting product: ${error.message}`);
     }
   };
 
@@ -37,14 +59,18 @@ function Dashboard() {
     <div className="h-screen overflow-hidden px-10 py-2">
       <div className="relative top-[80px] h-[calc(100%-80px)] flex flex-col gap-8">
         <button
-          onClick={() => setShowModal(!showModal)}
+          onClick={openCreateProductModal}
           className="px-6 py-3 bg-wine-berry rounded-lg text-white inline-flex w-fit"
         >
           Add A Product
         </button>
 
         {showModal && (
-          <CreateProductModal close={() => setShowModal(!showModal)} />
+          <ProductModal
+            close={() => setShowModal(false)}
+            productFunction={handleProductFunction}
+            defaultValues={selectedProduct}
+          />
         )}
 
         {/* Products */}
@@ -81,15 +107,7 @@ function Dashboard() {
 
                   <div className="flex gap-4">
                     <button
-                      onClick={() =>
-                        handleUpdateProduct(product.id, {
-                          name: product.name,
-                          description: product.description,
-                          price: 55.0,
-                          stock: product.stock,
-                          // image_url: product.image_url,
-                        })
-                      }
+                      onClick={() => openUpdateProductModal(product)}
                       className="px-4 py-2 bg-toledo text-white rounded-lg hover:bg-wewak transition duration-300"
                     >
                       Update Product

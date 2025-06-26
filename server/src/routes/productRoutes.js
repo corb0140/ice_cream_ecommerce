@@ -19,7 +19,7 @@ router.post(
 router.put(
   "/:id",
   authenticate,
-  // uploadImage,
+  uploadImage,
   authorize(["admin"]),
   productController.updateProduct
 );

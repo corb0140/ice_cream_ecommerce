@@ -62,26 +62,57 @@ const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, description, price, stock } = req.body;
-    // const file = req.file;
+    const file = req.file;
+
+    const currentProduct = await productService.getProductById(id);
+    if (!currentProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
 
     const updateFields = {};
-    if (req.body.name !== undefined) updateFields.name = name;
-    if (req.body.description !== undefined)
-      updateFields.description = description;
-    if (req.body.price !== undefined) updateFields.price = price;
-    if (req.body.stock !== undefined) updateFields.stock = stock;
+    if (name !== undefined) updateFields.name = name;
+    if (description !== undefined) updateFields.description = description;
+    if (price !== undefined) updateFields.price = price;
+    if (stock !== undefined) updateFields.stock = stock;
 
-    // if (req.file) {
-    //   const image_url = await imageService.uploadImage(file);
-    //   updateFields.image_url = image_url;
-    // }
+    let signedUrl;
 
+    if (file) {
+      const image_url = await imageService.uploadImage(file);
+      signedUrl = await imageService.getSignedImageUrl(image_url);
+      updateFields.image_url = image_url;
+    } else if (currentProduct.image_url) {
+      // If no new image is uploaded, keep the existing image URL
+      updateFields.image_url = currentProduct.image_url;
+    }
     const updatedProduct = await productService.updateProduct(id, updateFields);
 
     if (!updatedProduct) {
       return res.status(404).json({ message: "Product not found" });
     }
-    res.status(200).json(updatedProduct);
+
+    // If no new image was uploaded, get the existing image URL
+    if (updatedProduct.image_url) {
+      try {
+        signedUrl = await imageService.getSignedImageUrl(
+          updatedProduct.image_url
+        );
+      } catch (error) {
+        console.warn("Could not generate signed URL for image:", error);
+        signedUrl = updatedProduct.image_url; // Fallback to stored URL
+      }
+    }
+
+    // Return the updated product and the signed URL for the image
+    const productWithSignedUrl = {
+      ...updatedProduct,
+      image_url: signedUrl || updatedProduct.image_url,
+    };
+
+    res.status(200).json({
+      updatedProduct: productWithSignedUrl,
+      imageUrl: signedUrl || updatedProduct.image_url,
+    });
   } catch (error) {
     logger.error("Error updating product:", error);
     res.status(500).json({ message: "Internal server error" });
