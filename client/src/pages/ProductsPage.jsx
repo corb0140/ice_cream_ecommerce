@@ -1,17 +1,41 @@
 import { useGetProductsQuery } from "../lib/state/apiSlice";
+import { useMemo } from "react";
+
+const colors = [
+  "bg-wewak",
+  "bg-wine-berry",
+  "bg-cerulean-blue",
+  "bg-emerald-green",
+  "bg-sunshine-yellow",
+  "bg-purple-heart",
+  "bg-royal-pink",
+  "bg-tangerine",
+  "bg-mint-green",
+  "bg-coral-pink",
+];
 
 function ProductsPage() {
   const { data: products = [] } = useGetProductsQuery();
+
+  const productsWithColors = useMemo(() => {
+    return products.map((product) => {
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      return { ...product, color };
+    });
+  }, [products]);
+
   return (
     <div className="h-screen px-10 py-2">
       <div className="relative top-[80px] h-[calc(100%-80px)]">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
-          {products.map((product) => (
+          {productsWithColors.map((product) => (
             <div
               key={product.id}
               className="group relative bg-wewak/20 h-70 rounded-4xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
             >
-              <div className="flex items-center justify-center mb-4 absolute h-full w-full bg-wewak rounded-4xl z-10">
+              <div
+                className={`flex items-center justify-center mb-4 absolute h-full w-full ${product.color} rounded-4xl z-10`}
+              >
                 <img
                   src={product.image_url}
                   alt={`Product ${product.name}`}
@@ -25,15 +49,13 @@ function ProductsPage() {
 
                 <div className="mt-4 flex flex-col md:justify-between">
                   <div className="flex flex-col gap-2 md:gap-5 mb-4">
-                    <span className="text-sm font-bold">
-                      Price: ${product.price}
-                    </span>
-                    <span className="text-sm font-bold">
-                      Stock: {product.stock}
-                    </span>
+                    <span className="text-sm">Price: ${product.price}</span>
+                    <span className="text-sm">Stock: {product.stock}</span>
                   </div>
 
-                  <button className="px-4 py-2  bg-toledo text-white rounded-lg hover:bg-wewak transition duration-300">
+                  <button
+                    className={`px-4 py-2  ${product.color} text-white rounded-lg hover:bg-toledo transition duration-300`}
+                  >
                     Add to Cart
                   </button>
                 </div>

@@ -10,6 +10,14 @@
   --color-toledo: #3d0019;
   --color-candle-light: #fede18;
   --color-livid-brown: #472032;
+  --color-cerulean-blue: #2a9df4;
+  --color-emerald-green: #50c878;
+  --color-sunshine-yellow: #ffea00;
+  --color-purple-heart: #9b59b6;
+  --color-royal-pink: #e91e63;
+  --color-coral-pink: #ff6f61;
+  --color-mint-green: #98ff98;
+  --color-tangerine: #ff6347;
 }
 
 @layer base {

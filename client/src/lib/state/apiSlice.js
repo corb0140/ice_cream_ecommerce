@@ -72,7 +72,13 @@ export const apiSlice = createApi({
     // PRODUCTS
     getProducts: builder.query({
       query: () => "/products",
-      providesTags: ["Product"],
+      providesTags: (result = []) =>
+        result.length
+          ? [
+              ...result.map(({ id }) => ({ type: "Product", id })),
+              { type: "Product", id: "LIST" },
+            ]
+          : [{ type: "Product", id: "LIST" }],
     }),
 
     getProductById: builder.query({

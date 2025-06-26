@@ -1,12 +1,26 @@
 import { useState } from "react";
 import CreateProductModal from "@/components/CreateProductModal";
-import { useGetProductsQuery } from "@/lib/state/apiSlice";
+import {
+  useGetProductsQuery,
+  useDeleteProductMutation,
+  // useUpdateProductMutation,
+} from "@/lib/state/apiSlice";
 
 function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const { data: products = [] } = useGetProductsQuery();
+  const [deleteProduct] = useDeleteProductMutation();
 
   console.log("Products:", products);
+
+  const deleteProductById = async (id) => {
+    try {
+      await deleteProduct(id).unwrap();
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      alert(`Error deleting product: ${error.message}`);
+    }
+  };
 
   return (
     <div className="h-screen overflow-hidden px-10 py-2">
@@ -58,7 +72,10 @@ function Dashboard() {
                     <button className="px-4 py-2 bg-toledo text-white rounded-lg hover:bg-wewak transition duration-300">
                       Update Product
                     </button>
-                    <button className="px-4 py-2 bg-toledo text-white rounded-lg hover:bg-wewak transition duration-300">
+                    <button
+                      onClick={() => deleteProductById(product.id)}
+                      className="px-4 py-2 bg-toledo text-white rounded-lg hover:bg-wewak transition duration-300"
+                    >
                       Delete Product
                     </button>
                   </div>
