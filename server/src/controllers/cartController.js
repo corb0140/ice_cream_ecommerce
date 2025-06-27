@@ -4,12 +4,16 @@ const logger = require("../helpers/logger");
 const getCartItems = async (req, res) => {
   try {
     const { id } = req.user;
-    const sessionId = req.cookies.sessionId;
 
-    const cart = await cartService.getUserCart(id, sessionId);
+    const cart = await cartService.getUserCart(id);
 
     if (!cart) {
-      return res.status(404).json({ message: "Cart not found" });
+      // Return empty cart instead of 404
+      return res.status(200).json({
+        id: null,
+        user_id: id,
+        items: [],
+      });
     }
 
     res.status(200).json(cart);
@@ -22,7 +26,6 @@ const getCartItems = async (req, res) => {
 const addItemToCart = async (req, res) => {
   try {
     const { id } = req.user;
-    const sessionId = req.cookies.sessionId;
     const { productId, quantity } = req.body;
 
     if (!productId || !quantity) {
@@ -31,11 +34,10 @@ const addItemToCart = async (req, res) => {
         .json({ message: "Product ID and quantity are required" });
     }
 
-    const cartItem = await cartService.addItemToCart(
-      id,
-      { productId, quantity },
-      sessionId
-    );
+    const cartItem = await cartService.addItemToCart(id, {
+      productId,
+      quantity,
+    });
 
     res.status(201).json(cartItem);
   } catch (error) {

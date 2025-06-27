@@ -7,6 +7,7 @@ import { useGetUserImageQuery } from "../lib/state/apiSlice";
 import { useDispatch } from "react-redux";
 import { clearCredentials } from "@/lib/state/authSlice";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Links
 const links = [
@@ -18,7 +19,7 @@ const links = [
 ];
 
 function NavModal({ close, user }) {
-  console.log("user:", user);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const [image, setImage] = useState(null); // State to hold the user image
@@ -43,6 +44,11 @@ function NavModal({ close, user }) {
     } catch (error) {
       console.error("Logout failed:", error);
     }
+  };
+
+  const navigateToCart = () => {
+    navigate("/cart");
+    close();
   };
 
   const modalVariants = {
@@ -105,7 +111,8 @@ function NavModal({ close, user }) {
               <ShoppingCart
                 height={22}
                 width={22}
-                className="text-candle-light"
+                className="text-candle-light cursor-pointer"
+                onClick={navigateToCart}
               />
             </li>
           </ul>

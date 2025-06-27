@@ -5,6 +5,7 @@ import HomePage from "@/pages/HomePage";
 import LoginPage from "@/pages/LoginPage";
 import SignupPage from "@/pages/SignupPage";
 import ProductsPage from "@/pages/ProductsPage";
+import CartPage from "@/pages/CartPage";
 
 import AdminRoute from "./admin-route";
 import Dashboard from "@/pages/Dashboard";
@@ -19,6 +20,7 @@ function AppRouter() {
     { path: "/signup", element: <SignupPage /> },
     { path: "/products", element: <ProductsPage /> },
     { path: "/settings", element: <SettingsPage /> },
+    { path: "/cart", element: <CartPage /> },
   ];
 
   return (

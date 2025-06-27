@@ -167,5 +167,6 @@ export const {
   useDeleteProductMutation,
   useGetCartQuery,
   useAddToCartMutation,
+  useUpdateCartItemMutation,
   useRemoveItemFromCartMutation,
 } = apiSlice;

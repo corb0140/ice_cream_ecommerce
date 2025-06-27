@@ -1,5 +1,9 @@
-import { useGetProductsQuery } from "../lib/state/apiSlice";
+import {
+  useGetProductsQuery,
+  useAddToCartMutation,
+} from "../lib/state/apiSlice";
 import { useMemo } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 const colors = [
   "bg-wewak",
@@ -16,6 +20,7 @@ const colors = [
 
 function ProductsPage() {
   const { data: products = [] } = useGetProductsQuery();
+  const [addToCart] = useAddToCartMutation();
 
   const productsWithColors = useMemo(() => {
     return products.map((product) => {
@@ -24,8 +29,16 @@ function ProductsPage() {
     });
   }, [products]);
 
+  const handleAddToCart = (productId) => {
+    addToCart({ productId, quantity: 1 });
+    toast.success("Product added to cart successfully!");
+  };
+
   return (
     <div className="h-screen px-10 py-2">
+      <div>
+        <Toaster position="top-center" />
+      </div>
       <div className="relative top-[80px] h-[calc(100%-80px)]">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
           {productsWithColors.map((product) => (
@@ -54,7 +67,8 @@ function ProductsPage() {
                   </div>
 
                   <button
-                    className={`px-4 py-2  ${product.color} text-white rounded-lg hover:bg-toledo transition duration-300`}
+                    onClick={() => handleAddToCart(product.id)}
+                    className={`px-4 py-2 ${product.color} text-white rounded-lg hover:bg-toledo transition duration-300`}
                   >
                     Add to Cart
                   </button>
