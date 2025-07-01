@@ -6,6 +6,8 @@ import LoginPage from "@/pages/LoginPage";
 import SignupPage from "@/pages/SignupPage";
 import ProductsPage from "@/pages/ProductsPage";
 import CartPage from "@/pages/CartPage";
+import CheckoutPage from "@/pages/CheckoutPage";
+import CheckoutSuccessPage from "@/pages/CheckoutSuccessPage";
 
 import AdminRoute from "./admin-route";
 import Dashboard from "@/pages/Dashboard";
@@ -21,6 +23,8 @@ function AppRouter() {
     { path: "/products", element: <ProductsPage /> },
     { path: "/settings", element: <SettingsPage /> },
     { path: "/cart", element: <CartPage /> },
+    { path: "/checkout", element: <CheckoutPage /> },
+    { path: "/checkout-success", element: <CheckoutSuccessPage /> },
   ];
 
   return (

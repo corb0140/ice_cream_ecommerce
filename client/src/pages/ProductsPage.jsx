@@ -4,6 +4,8 @@ import {
 } from "../lib/state/apiSlice";
 import { useMemo } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../lib/state/authSlice";
 
 const colors = [
   "bg-wewak",
@@ -21,6 +23,7 @@ const colors = [
 function ProductsPage() {
   const { data: products = [] } = useGetProductsQuery();
   const [addToCart] = useAddToCartMutation();
+  const currentUser = useSelector(selectCurrentUser);
 
   const productsWithColors = useMemo(() => {
     return products.map((product) => {
@@ -30,6 +33,11 @@ function ProductsPage() {
   }, [products]);
 
   const handleAddToCart = (productId) => {
+    if (!currentUser) {
+      toast.error("You must be logged in to add items to the cart.");
+      return;
+    }
+
     addToCart({ productId, quantity: 1 });
     toast.success("Product added to cart successfully!");
   };

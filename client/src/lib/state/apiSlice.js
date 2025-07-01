@@ -147,6 +147,15 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Cart"],
     }),
+
+    // CHECKOUT
+    createCheckoutSession: builder.mutation({
+      query: (cartItems) => ({
+        url: "/checkout/create-checkout-session",
+        method: "POST",
+        body: { cartItems },
+      }),
+    }),
   }),
 });
 
@@ -169,4 +178,5 @@ export const {
   useAddToCartMutation,
   useUpdateCartItemMutation,
   useRemoveItemFromCartMutation,
+  useCreateCheckoutSessionMutation,
 } = apiSlice;

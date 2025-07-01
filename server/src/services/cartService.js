@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const imageService = require("./imageService");
 
 const getUserCart = async (userId) => {
   const { rows: cart } = await pool.query(
@@ -30,9 +31,19 @@ const getUserCart = async (userId) => {
     [cartId]
   );
 
+  const signedItems = await Promise.all(
+    items.map(async (item) => {
+      const signedUrl = await imageService.getSignedImageUrl(item.image_url);
+      return {
+        ...item,
+        image_url: signedUrl,
+      };
+    })
+  );
+
   return {
     ...cart[0],
-    items,
+    items: signedItems,
   };
 };
 

@@ -46,6 +46,16 @@ const CartPage = () => {
       .toFixed(2);
   };
 
+  const proceedToCheckout = () => {
+    if (cart && cart.items && cart.items.length > 0) {
+      navigate("/checkout");
+    } else {
+      alert(
+        "Your cart is empty. Please add items before proceeding to checkout."
+      );
+    }
+  };
+
   if (!cart || !cart.items || cart.items.length === 0) {
     return (
       <div className="min-h-screen bg-early-dawn flex items-center justify-center">
@@ -166,7 +176,10 @@ const CartPage = () => {
               >
                 Continue Shopping
               </button>
-              <button className="flex-1 bg-wewak text-toledo py-2 px-6 rounded-lg hover:bg-toledo hover:text-white transition-colors">
+              <button
+                onClick={proceedToCheckout}
+                className="flex-1 bg-wewak text-toledo py-2 px-6 rounded-lg hover:bg-toledo hover:text-white transition-colors"
+              >
                 Proceed to Checkout
               </button>
             </div>
