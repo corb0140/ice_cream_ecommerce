@@ -2,20 +2,27 @@ import ice_cream_banner from "@/assets/imgs/ice-cream-banner.png";
 
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "@/lib/state/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectCurrentUser,
+  selectJustLoggedIn,
+  clearJustLoggedIn,
+} from "@/lib/state/authSlice";
 import toast, { Toaster } from "react-hot-toast";
 
 function HomePage() {
+  const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
+  const justLoggedIn = useSelector(selectJustLoggedIn);
   const hasShownToast = useRef(false);
 
   useEffect(() => {
-    if (!hasShownToast.current && currentUser) {
+    if (!hasShownToast.current && currentUser && justLoggedIn) {
       toast(`Welcome, ${currentUser.username}!`);
+      dispatch(clearJustLoggedIn());
       hasShownToast.current = true;
     }
-  }, [currentUser]);
+  }, [currentUser, justLoggedIn, dispatch]);
 
   return (
     <div
