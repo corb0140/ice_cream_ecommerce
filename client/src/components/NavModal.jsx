@@ -105,13 +105,17 @@ function NavModal({ close, user }) {
 
           <ul className="flex items-center gap-3">
             <li>
-              <Heart height={22} width={22} className="text-candle-light" />
+              <Heart
+                height={22}
+                width={22}
+                className="text-candle-light cursor-pointer hover:scale-120 hover:text-wewak transition duration-300"
+              />
             </li>
             <li>
               <ShoppingCart
                 height={22}
                 width={22}
-                className="text-candle-light cursor-pointer"
+                className="text-candle-light cursor-pointer hover:scale-120 hover:text-wewak transition duration-300"
                 onClick={navigateToCart}
               />
             </li>
