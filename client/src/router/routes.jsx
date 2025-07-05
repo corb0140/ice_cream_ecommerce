@@ -8,6 +8,7 @@ import ProductsPage from "@/pages/ProductsPage";
 import CartPage from "@/pages/CartPage";
 import CheckoutPage from "@/pages/CheckoutPage";
 import CheckoutSuccessPage from "@/pages/CheckoutSuccessPage";
+import FavoritesPage from "@/pages/FavoritesPage";
 
 import AdminRoute from "./admin-route";
 import Dashboard from "@/pages/Dashboard";
@@ -25,6 +26,7 @@ function AppRouter() {
     { path: "/cart", element: <CartPage /> },
     { path: "/checkout", element: <CheckoutPage /> },
     { path: "/checkout-success", element: <CheckoutSuccessPage /> },
+    { path: "/favorites", element: <FavoritesPage /> },
   ];
 
   return (

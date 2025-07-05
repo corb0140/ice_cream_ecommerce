@@ -156,6 +156,29 @@ export const apiSlice = createApi({
         body: { cartItems },
       }),
     }),
+
+    // FAVORITES
+    getUserFavorites: builder.query({
+      query: () => "/favorites",
+      providesTags: ["User"],
+    }),
+
+    addFavorite: builder.mutation({
+      query: (productId) => ({
+        url: "/favorites",
+        method: "POST",
+        body: productId,
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    removeFavorite: builder.mutation({
+      query: (productId) => ({
+        url: `/favorites/${productId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -179,4 +202,7 @@ export const {
   useUpdateCartItemMutation,
   useRemoveItemFromCartMutation,
   useCreateCheckoutSessionMutation,
+  useGetUserFavoritesQuery,
+  useAddFavoriteMutation,
+  useRemoveFavoriteMutation,
 } = apiSlice;

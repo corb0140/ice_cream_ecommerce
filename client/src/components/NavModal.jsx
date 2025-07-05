@@ -51,6 +51,11 @@ function NavModal({ close, user }) {
     close();
   };
 
+  const navigateToFavorites = () => {
+    navigate("/favorites");
+    close();
+  };
+
   const modalVariants = {
     hidden: { opacity: 0, x: 100 },
     visible: {
@@ -109,6 +114,7 @@ function NavModal({ close, user }) {
                 height={22}
                 width={22}
                 className="text-candle-light cursor-pointer hover:scale-120 hover:text-wewak transition duration-300"
+                onClick={navigateToFavorites}
               />
             </li>
             <li>

@@ -1,6 +1,7 @@
 import {
   useGetProductsQuery,
   useAddToCartMutation,
+  useAddFavoriteMutation,
 } from "../lib/state/apiSlice";
 import { useMemo } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -23,6 +24,7 @@ const colors = [
 function ProductsPage() {
   const { data: products = [] } = useGetProductsQuery();
   const [addToCart] = useAddToCartMutation();
+  const [addFavorite] = useAddFavoriteMutation();
   const currentUser = useSelector(selectCurrentUser);
 
   const productsWithColors = useMemo(() => {
@@ -40,6 +42,16 @@ function ProductsPage() {
 
     addToCart({ productId, quantity: 1 });
     toast.success("Product added to cart successfully!");
+  };
+
+  const handleAddToFavorites = (productId) => {
+    if (!currentUser) {
+      toast.error("You must be logged in to add items to favorites.");
+      return;
+    }
+
+    addFavorite({ productId });
+    toast.success("Product added to favorites successfully!");
   };
 
   return (
@@ -76,9 +88,16 @@ function ProductsPage() {
 
                   <button
                     onClick={() => handleAddToCart(product.id)}
-                    className={`px-4 py-2 ${product.color} text-white rounded-lg hover:bg-toledo transition duration-300`}
+                    className={`mb-4 px-4 py-2 ${product.color} text-white rounded-lg hover:bg-toledo transition duration-300`}
                   >
                     Add to Cart
+                  </button>
+
+                  <button
+                    onClick={() => handleAddToFavorites(product.id)}
+                    className={`px-4 py-2 ${product.color} text-white rounded-lg hover:bg-toledo transition duration-300`}
+                  >
+                    Add to Favorites
                   </button>
                 </div>
               </div>

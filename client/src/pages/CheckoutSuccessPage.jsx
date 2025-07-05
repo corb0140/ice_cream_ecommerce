@@ -5,7 +5,9 @@ function CheckoutSuccessPage() {
         <h1 className="text-2xl font-bold text-green-700">
           🎉 Payment Successful!
         </h1>
-        <p className="mt-2 text-gray-700">Thank you for your order.</p>
+        <p className="mt-2 text-wine-berry text-lg">
+          Thank you for your order.
+        </p>
       </div>
     </div>
   );
