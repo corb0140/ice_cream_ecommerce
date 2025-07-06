@@ -10,13 +10,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Links
-const links = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Settings", path: "/settings" },
-  { name: "Contact Us", path: "/contact" },
-  { name: "Dashboard", path: "/dashboard" },
-];
+import { links } from "@/data/navLinks";
 
 function NavModal({ close, user }) {
   const navigate = useNavigate();
