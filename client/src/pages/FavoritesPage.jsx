@@ -23,8 +23,8 @@ export default function FavoritesPage() {
   if (isError)
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-center text-lg text-red-500">
-          Failed to load favorites.
+        <p className="text-center text-md font-bold text-red-700">
+          Must be logged in to view favorites.
         </p>
       </div>
     );
