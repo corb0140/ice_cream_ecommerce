@@ -46,7 +46,7 @@ app.use("/images", imageRoutes);
 app.use("/checkout", checkoutRoutes);
 app.use("/favorites", favoritesRoutes);
 
-app.get("/health", (req, res) => {
+app.get("/", (req, res) => {
   res.status(200).json({ status: "healthy" });
 });
 
