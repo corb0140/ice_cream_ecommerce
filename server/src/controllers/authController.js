@@ -30,7 +30,7 @@ const signup = async (req, res) => {
     });
   } catch (error) {
     logger.error(`Error in signup: ${error.message}`);
-    res.status(500).json({ message: `Internal server error` });
+    res.status(500).json({ message: `Internal server error ${error}` });
   }
 };
 
