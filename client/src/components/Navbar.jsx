@@ -72,7 +72,7 @@ function Navbar() {
                     className="group flex items-center justify-center w-22 h-9 rounded-full transition-colors duration-300 focus-within:bg-wewak"
                   >
                     <Link
-                      to={link.path}
+                      to={"/about"}
                       onClick={close}
                       className="flex items-center justify-center rounded-full w-full h-9 text-sm font-semibold lg:font-light text-wewak hover:bg-wewak hover:text-livid-brown focus:text-livid-brown"
                     >
