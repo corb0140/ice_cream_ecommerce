@@ -88,7 +88,7 @@ function LoginPage() {
 
         {/* FORM */}
         <form
-          action=""
+          method="POST"
           onSubmit={handleSignupSubmit}
           className="flex flex-col gap-5"
         >
