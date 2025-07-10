@@ -93,7 +93,7 @@ function LoginPage() {
           className="flex flex-col gap-5"
         >
           <FormInputs
-            name="Name"
+            name="Username"
             type="text"
             value={formData.name}
             setValue={(value) => setFormData({ ...formData, name: value })}

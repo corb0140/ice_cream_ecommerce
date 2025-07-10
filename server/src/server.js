@@ -11,14 +11,12 @@ app.use(express.json());
 app.use(cookieParser());
 
 // CORS CONFIGURATION
-// const allowedOrigins = [process.env.CLIENT_URL, process.env.VERCEL_URL];
 app.use(
   cors({
     origin: [process.env.CLIENT_URL, process.env.VERCEL_URL],
     credentials: true,
   })
 );
-// app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 
 // IMPORT ROUTES
 const authRoutes = require("./routes/authRoutes");
