@@ -13,13 +13,13 @@ const signup = async (req, res) => {
 
     // Set cookies for access and refresh tokens
     res.cookie(`accessToken`, accessToken, {
-      // httpOnly: true,
+      httpOnly: true,
       secure: process.env.NODE_ENV === `production`,
       sameSite: `Strict`,
     });
 
     res.cookie(`refreshToken`, refreshToken, {
-      // httpOnly: true,
+      httpOnly: true,
       secure: process.env.NODE_ENV === `production`,
       sameSite: `Strict`,
     });
