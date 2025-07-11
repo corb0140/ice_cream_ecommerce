@@ -4,10 +4,19 @@ const path = require("path");
 const uuid = require("uuid").v4;
 const pool = require("../config/db");
 
-const keyFilePath = process.env.GOOGLE_STORAGE_KEY_FILE;
+// const keyFilePath = process.env.GOOGLE_STORAGE_KEY_FILE;
+
+const credentials = {
+  type: process.env.GC_TYPE,
+  project_id: process.env.GC_PROJECT_ID,
+  private_key_id: process.env.GC_PRIVATE_KEY_ID,
+  private_key: process.env.GC_PRIVATE_KEY.replace(/\\n/g, "\n"),
+  client_email: process.env.GC_CLIENT_EMAIL,
+  client_id: process.env.GC_CLIENT_ID,
+};
 
 const storage = new Storage({
-  keyFilename: keyFilePath,
+  credentials,
   projectId: process.env.GOOGLE_CLOUD_PROJECT,
 });
 
