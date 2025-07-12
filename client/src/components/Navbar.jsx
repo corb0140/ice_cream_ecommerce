@@ -27,7 +27,6 @@ function Navbar() {
       await logout().unwrap(); // Call the logout mutation
 
       dispatch(clearCredentials()); // Clear user credentials in Redux store
-      close();
     } catch (error) {
       console.error("Logout failed:", error);
     }
