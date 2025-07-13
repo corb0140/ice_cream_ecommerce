@@ -1,6 +1,6 @@
 function AboutPage() {
   return (
-    <div className="min-h-screen bg-livid-brown text-white px-6 py-20 lg:py-30">
+    <div className="min-h-screen bg-early-dawn text-white px-6 py-20 lg:py-30">
       <div className="max-w-5xl mx-auto text-center space-y-10">
         <h1 className="text-4xl font-bold">About Sweet Tooth</h1>
         <p className="text-lg leading-relaxed">

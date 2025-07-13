@@ -18,7 +18,7 @@ function ContactUs() {
   };
 
   return (
-    <div className="min-h-screen overflow-hidden px-4 py-2 lg:pt-20 bg-livid-brown text-white ">
+    <div className="min-h-screen overflow-hidden px-4 py-2 lg:pt-20 bg-early-dawn text-white ">
       <div className=" flex flex-col items-center justify-center relative top-[80px] h-[calc(100%-80px)]">
         <h1 className="text-3xl font-bold mb-5 text-center">Contact Us</h1>
 
