@@ -44,7 +44,11 @@ const uploadImage = async (file) => {
 
     return gcsFileName;
   } catch (error) {
-    console.error("Error uploading file to Google Cloud Storage:", error);
+    console.error("❌ Upload failed.");
+    console.error("Message:", error.message);
+    console.error("Code:", error.code || "N/A");
+    console.error("Errors:", error.errors || "N/A");
+    console.error("Stack:", error.stack);
     throw new Error("Failed to upload image");
   }
 };

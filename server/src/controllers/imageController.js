@@ -22,8 +22,6 @@ const uploadImage = async (req, res) => {
       error: "Image upload failed",
       message: error.message,
       stack: error.stack,
-      code: error.code,
-      error: error.errors,
     });
   }
 };
