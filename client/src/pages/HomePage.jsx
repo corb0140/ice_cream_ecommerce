@@ -35,7 +35,7 @@ function HomePage() {
           "scoop up some sweetness!
         </h1>
 
-        <p className="text-center text-[15px] lg:text-[13px] lg:w-1/2">
+        <p className="text-center text-[15px] lg:text-[15px] lg:w-1/2 lg:text-toledo">
           Nothing beats the creamy, dreamy bliss of a perfectly scooped ice
           cream on a warm day, Whether it's the rich decadence of chocolate, the
           refreshing zing of mint, or the classic comfort of vanilla, each scoop
@@ -48,12 +48,12 @@ function HomePage() {
           <img
             src={ice_cream_banner}
             alt="Ice Cream Banner"
-            className="relative h-100 lg:h-120 lg:top-20 w-full object-cover lg:object-fill"
+            className="relative h-100 lg:h-full lg:top-100 w-full object-cover lg:object-fill"
           />
 
           <Link
             to="/products"
-            className="bg-wine-berry rounded-full h-13 lg:h-15 w-40 lg:w-60 absolute top-60 lg:top-70 flex items-center justify-center"
+            className="bg-wine-berry rounded-full h-13 lg:h-15 w-40 lg:w-60 absolute top-60 lg:top-170 flex items-center justify-center"
           >
             <span className="text-candle-light text-sm">Shop Now</span>
           </Link>

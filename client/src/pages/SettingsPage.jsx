@@ -52,7 +52,7 @@ function SettingsPage() {
   };
 
   return (
-    <div className="h-screen overflow-hidden px-10 py-2">
+    <div className="h-screen overflow-hidden px-10 lg:px-25 py-2 lg:py-15">
       <div className="relative top-[80px] h-[calc(100%-80px)] flex flex-col gap-5">
         <h2 className="uppercase text-3xl ">Settings</h2>
 
