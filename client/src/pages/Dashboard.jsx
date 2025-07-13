@@ -56,7 +56,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="h-screen overflow-hidden px-10 py-2">
+    <div className="h-screen overflow-hidden px-10 py-2 lg:px-25 lg:pt-10">
       <div className="relative top-[80px] h-[calc(100%-80px)] flex flex-col gap-8">
         <button
           onClick={openCreateProductModal}
