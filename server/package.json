@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "start": "NODE_OPTIONS=--openssl-legacy-provider node src/server.js",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider nodemon src/server.js"
   },
   "author": "Mark Corbin",
   "license": "ISC",
