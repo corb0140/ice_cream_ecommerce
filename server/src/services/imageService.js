@@ -44,7 +44,7 @@ const uploadImage = async (file) => {
 
     return gcsFileName;
   } catch (error) {
-    console.error("❌ Upload failed.");
+    console.error("Upload failed.");
     console.error("Message:", error.message);
     console.error("Code:", error.code || "N/A");
     console.error("Errors:", error.errors || "N/A");
