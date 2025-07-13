@@ -59,7 +59,12 @@ function ProductsPage() {
       <div>
         <Toaster position="top-center" />
       </div>
-      <div className="relative top-[80px] h-[calc(100%-80px)]">
+
+      <div className="relative top-[80px] h-[calc(100%-80px)] lg:px-15 lg:py-5">
+        <div className="font-bold text-2xl mb-5 uppercase tracking-wide">
+          Our Flavours:
+        </div>
+
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
           {productsWithColors.map((product) => (
             <div
