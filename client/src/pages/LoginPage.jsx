@@ -65,14 +65,14 @@ function LoginPage() {
   };
 
   return (
-    <div className="h-screen overflow-hidden p-10">
+    <div className="h-screen overflow-hidden p-10 lg:flex lg:justify-center lg:items-center">
       <div>
         <Toaster position="top-center" />
       </div>
 
       <div
-        className="relative top-[80px] h-[calc(100%-80px)] bg-wine-berry rounded-lg shadow-[2px_2px_10px] shadow-livid-brown
-        flex flex-col gap-10 p-5 text-white"
+        className="relative not-lg:top-[80px] not-lg:h-[calc(100%-80px)] bg-wine-berry rounded-lg shadow-[2px_2px_10px] shadow-livid-brown
+        flex flex-col gap-10 p-5 lg:w-1/2 text-white"
       >
         {/* MESSAGE */}
         <section className="flex flex-col gap-2">
